@@ -2,7 +2,7 @@
 
 const test = require("tap").test;
 
-require('./clarify.js');
+const clarify = require('./clarify.js');
 
 test("node internal call sites should be ignored", function (t) {
 
@@ -22,5 +22,26 @@ test("no filename dosn't break", function (t) {
 
     t.equal(lines.length, 2);
     t.end();
+  });
+});
+
+test("custom filters can be applied via exports.filter", function (t) {
+  Promise = require('bluebird')
+  
+  process.nextTick(function () {
+    t.equal(typeof clarify.filter, 'function');
+    
+    Promise.resolve()
+      .then(()=> {
+        var lines = (new Error('trace')).stack.split('\n');
+        t.ok(lines.some((line)=> line.includes('bluebird')))
+      })
+      .then(()=> clarify.filter(['bluebird']))
+      .then(()=> {
+        var lines = (new Error('trace')).stack.split('\n');
+        t.notOk(lines.some((line)=> line.includes('bluebird')))
+        t.equal(lines.length, 2);
+        t.end();
+      })
   });
 });

@@ -1,5 +1,5 @@
 {
-  "name": "clarify",
+  "name": "clarify-plus",
   "description": "Remove nodecore related stack trace noise",
   "version": "2.0.0",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
@@ -7,9 +7,9 @@
   "scripts": {
     "test": "tap ./test.js && eslint ."
   },
-  "repository" : {
+  "repository": {
     "type": "git",
-    "url": "git://github.com/AndreasMadsen/clarify.git"
+    "url": "git://github.com/danielkalen/clarify.git"
   },
   "keywords": [
     "trace",
